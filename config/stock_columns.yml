@@ -1,0 +1,149 @@
+# 股票日线表头按数据类型分类
+# 依据 config/DataType.md，对应数据源 data/stock_000001.csv
+
+# 原始行情数据（市场直接给出的）
+raw_market_data:
+  description: 交易所/行情供应商直接报出的未复权行情与基础指标
+  columns:
+    - ts_code          # 证券代码
+    - trade_date       # 交易日
+    - open             # 未复权开盘价
+    - high             # 未复权最高价
+    - low              # 未复权最低价
+    - close            # 未复权收盘价
+    - pre_close        # 前一交易日未复权收盘价
+    - vol              # 成交量
+    - amount           # 成交额（元）
+    - turnover_rate    # 换手率
+    - turnover_rate_f  # 自由流通换手率
+    - volume_ratio     # 量比
+    - pe               # 市盈率（静态）
+    - pe_ttm           # 市盈率（TTM）
+    - pb               # 市净率
+    - ps               # 市销率（静态）
+    - ps_ttm           # 市销率（TTM）
+    - dv_ratio         # 股息率（静态）
+    - dv_ttm           # 股息率（TTM）
+    - total_share      # 总股本
+    - float_share      # 流通股本
+    - free_share       # 自由流通股本
+    - total_mv         # 总市值
+    - circ_mv          # 流通市值
+    - adj_factor       # 除权除息复权因子
+
+# 前复权价格（由原始行情 + 复权因子计算得到）
+adjusted_price_qfq:
+  description: 前复权价格，使用 adj_factor 向前复权
+  columns:
+    - open_qfq
+    - high_qfq
+    - low_qfq
+    - close_qfq
+    - pre_close_qfq
+
+# 后复权价格（由原始行情 + 复权因子计算得到）
+adjusted_price_hfq:
+  description: 后复权价格，使用 adj_factor 向后复权
+  columns:
+    - open_hfq
+    - high_hfq
+    - low_hfq
+    - close_hfq
+    - pre_close_hfq
+
+# 衍生的统计/涨跌字段（由原始数据计算得到）
+derived:
+  description: 涨跌额、涨跌幅等计算字段
+  columns:
+    - change   # 收盘价 - 前收盘价
+    - pct_chg  # 涨跌幅 = change / pre_close * 100%
+
+# 技术指标（由原始数据或复权价计算得到）
+technical_indicators:
+  description: EMA 等基于复权价计算的均线
+  columns:
+    # 基于前复权收盘价的 EMA（bfq 系列）
+    - ema_bfq_5
+    - ema_bfq_10
+    - ema_bfq_20
+    - ema_bfq_30
+    - ema_bfq_60
+    - ema_bfq_90
+    - ema_bfq_250
+    # 基于前复权收盘价的 EMA（qfq 系列）
+    - ema_qfq_5
+    - ema_qfq_10
+    - ema_qfq_20
+    - ema_qfq_30
+    - ema_qfq_60
+    - ema_qfq_90
+    - ema_qfq_250
+    # 基于后复权收盘价的 EMA（hfq 系列）
+    - ema_hfq_5
+    - ema_hfq_10
+    - ema_hfq_20
+    - ema_hfq_30
+    - ema_hfq_60
+    - ema_hfq_90
+    - ema_hfq_250
+
+# 所有列名（与 CSV 表头顺序一致，便于程序按序解析）
+all_columns:
+  - ts_code
+  - trade_date
+  - open
+  - high
+  - low
+  - close
+  - pre_close
+  - change
+  - pct_chg
+  - vol
+  - amount
+  - open_qfq
+  - high_qfq
+  - low_qfq
+  - close_qfq
+  - pre_close_qfq
+  - open_hfq
+  - high_hfq
+  - low_hfq
+  - close_hfq
+  - pre_close_hfq
+  - turnover_rate
+  - turnover_rate_f
+  - volume_ratio
+  - pe
+  - pe_ttm
+  - pb
+  - ps
+  - ps_ttm
+  - dv_ratio
+  - dv_ttm
+  - total_share
+  - float_share
+  - free_share
+  - total_mv
+  - circ_mv
+  - adj_factor
+  - ema_bfq_5
+  - ema_bfq_10
+  - ema_bfq_20
+  - ema_bfq_30
+  - ema_bfq_60
+  - ema_bfq_90
+  - ema_bfq_250
+  - ema_qfq_5
+  - ema_qfq_10
+  - ema_qfq_20
+  - ema_qfq_30
+  - ema_qfq_60
+  - ema_qfq_90
+  - ema_qfq_250
+  - ema_hfq_5
+  - ema_hfq_10
+  - ema_hfq_20
+  - ema_hfq_30
+  - ema_hfq_60
+  - ema_hfq_90
+  - ema_hfq_250
